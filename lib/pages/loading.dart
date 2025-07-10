@@ -51,7 +51,7 @@ class LoadingState extends State<Loading> {
   void setupWorldTime() async {
     WorldTime instance = WorldTime(city: city, country: country);
     await instance.getTime();
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 2));
     // print(instance.statusCheck);
     if(!mounted) return;
 
@@ -66,7 +66,7 @@ class LoadingState extends State<Loading> {
     }
     else if(instance.statusCheck == 401) {
 
-      String errorMessage = "Couldn't contact our guy there. Could you try checking your internet connection🤔?";
+      String errorMessage = "Couldn't contact our guy there. Try checking your internet connection maybe🤔?";
       Navigator.pushReplacementNamed(context, '/error_message', arguments: errorMessage);
 
     }
