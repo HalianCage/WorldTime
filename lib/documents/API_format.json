@@ -1,0 +1,52 @@
+{
+  "status": "ok",
+  "error": null,
+  "data": {
+    "search": "San Francisco",
+    "foundCities": [
+      {
+        "city": "San Francisco",
+        "city_ascii": "San Francisco",
+        "country": "Argentina",
+        "iso2": "AR",
+        "iso3": "ARG",
+        "province": "Córdoba",
+        "timezone": "America/Argentina/Cordoba",
+        "time": "18:36",
+        "time24": "18:36:10",
+        "time12": "06:36:10 PM",
+        "date": "2025-02-20",
+        "day": "Thursday",
+        "month": "February",
+        "year": "2025",
+        "unix": "1740087370",
+        "dst": false,
+        "dst_start": "2025-02-20 18:36:10",
+        "dst_end": "2025-02-20 18:36:10",
+        "dst_name": "-03"
+      },
+      {
+        "city": "San Francisco",
+        "city_ascii": "San Francisco",
+        "country": "United States of America",
+        "iso2": "US",
+        "iso3": "USA",
+        "province": "California",
+        "state_ansi": "CA",
+        "timezone": "America/Los_Angeles",
+        "time": "13:36",
+        "time24": "13:36:10",
+        "time12": "01:36:10 PM",
+        "date": "2025-02-20",
+        "day": "Thursday",
+        "month": "February",
+        "year": "2025",
+        "unix": "1740087370",
+        "dst": false,
+        "dst_start": "2025-02-20 13:36:10",
+        "dst_end": "2025-02-20 13:36:10",
+        "dst_name": "PST"
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+0)Remove the flag feature - DONE
+1)Fetch also with country, as multiple cities with same name from different countries - DONE
+2)Refine the city name & country name data in the csv file, to match the API source names
+3)Add the search bar in choose locations page. - DONE
+4)For default location when the app opens for the first time, try to get the device location rather than hardcoding San Franciso.
+5)Incorrect city name entered edge case handling - DONE
+6)Unsuccessful WorldTime API fetch error handling - DONE
+
+UI goals -
+1) change the font in the fallback texts(search_page.dart, loading.dart)
+2) Get a UI theme from pinterest and apply it across the app
