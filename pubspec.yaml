@@ -82,6 +82,9 @@ flutter:
    - family: ShareTech
      fonts:
        - asset: assets/ShareTech-Regular.ttf
+   - family: MuseoModerno
+     fonts:
+       - asset: assets/MuseoModerno.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

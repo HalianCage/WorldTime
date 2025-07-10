@@ -112,7 +112,10 @@ class _ChooseLocationState extends State<ChooseLocation> {
         title: Text(
           "Choose Location",
           style: TextStyle(
-            fontFamily: 'QuickSand',
+            fontFamily: 'MuseoModerno',
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
+
           ),
         ),
         centerTitle: true,
@@ -143,14 +146,19 @@ class _ChooseLocationState extends State<ChooseLocation> {
                   textAlign: TextAlign.center,
               ),
             )
-            : ListView.builder(
+            : ListView.separated(
               itemCount: _filteredCityData.length,
               itemBuilder: (_, index) {
                 return ListTile(
                   title: Text(
                     '${_filteredCityData[index]['city']}, ${_filteredCityData[index]['country']}',
-                    style: TextStyle(fontFamily: 'ShareTech'),
+                    style: TextStyle(
+                      fontFamily: 'MuseoModerno',
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold
+                    ),
                   ),
+                  hoverColor: Colors.grey,
                   onTap: () {
                     Navigator.pushReplacementNamed(context, '/', arguments: {
                       'city' : _filteredCityData[index]['city'],
@@ -158,7 +166,15 @@ class _ChooseLocationState extends State<ChooseLocation> {
                     });
                   },
                 );
-              }
+              },
+              separatorBuilder: (_, index) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                  child: Divider(
+                    color: Colors.black45
+                  ),
+                );
+              },
             ),
           )
         ],
