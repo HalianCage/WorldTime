@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:world_time/services/world_time.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:world_time/services/location_services.dart';
+import 'package:geocoding/geocoding.dart';
 
 class Loading extends StatefulWidget {
   const Loading({super.key});
@@ -19,6 +21,21 @@ class LoadingState extends State<Loading> {
   late String date;
 
   // LoadingState({required this.city});
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initSetup();
+  }
+
+  void initSetup() async {
+    bool check = await checkPermission();
+    print("Permission status: $check");
+
+    await getLocation();
+    await getCity();
+  }
 
 
   @override
@@ -44,6 +61,25 @@ class LoadingState extends State<Loading> {
       setupWorldTime();
     }
 
+  }
+
+
+  Future<void> getCity() async {
+    try {
+      List<Placemark> placeMarks = await placemarkFromCoordinates(40.7128, -74.0060);
+
+      if (placeMarks.isNotEmpty) {
+        Placemark place = placeMarks.first;
+        print("City: ${place.locality}");
+        print("Country: ${place.country}");
+      } else {
+        print("No placemarks returned.");
+      }
+
+    } catch (e, stackTrace) {
+      print("Error while getting placemark: $e");
+      print("Stack trace: $stackTrace");
+    }
   }
 
 

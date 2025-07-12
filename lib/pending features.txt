@@ -1,6 +1,6 @@
 0)Remove the flag feature - DONE
 1)Fetch also with country, as multiple cities with same name from different countries - DONE
-Friday - 2)Refine the city name & country name data in the csv file, to match the API source names
+2)Refine the city name & country name data in the csv file, to match the API source names - UNABLE to do it
 3)Add the search bar in choose locations page. - DONE
 Saturday - 4)For default location when the app opens for the first time, try to get the device location rather than hardcoding San Francisco.
 5)Incorrect city name entered edge case handling - DONE
@@ -12,3 +12,6 @@ Sunday - 9)Create the ReadMe file for this project.
 UI goals -
 1) change the font in the fallback texts(search_page.dart, loading.dart) - DONE
 2) Get a UI theme from pinterest and apply it across the app - DONE
+
+
+13d45c66-3e30-4181-82e8-33668e428938

@@ -36,7 +36,7 @@ class WorldTime {
     try {
 
       final apiUri = Uri.parse('https://api.apiverve.com/v1/worldtime?city=$city');
-      Map<String, String> header = { "x-api-key": "13d45c66-3e30-4181-82e8-33668e428938" };
+      Map<String, String> header = { "x-api-key": "13d45c66-3e30-4181-82e8-33668e42" };
       Response response = await get(apiUri, headers: header);
       data = jsonDecode(response.body);
       statusCheck = 201;
