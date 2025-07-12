@@ -76,12 +76,6 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-   - family: QuickSand
-     fonts:
-       - asset: assets/QuickSand.ttf
-   - family: ShareTech
-     fonts:
-       - asset: assets/ShareTech-Regular.ttf
    - family: MuseoModerno
      fonts:
        - asset: assets/MuseoModerno.ttf

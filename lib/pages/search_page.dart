@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';
@@ -18,7 +17,9 @@ class _ChooseLocationState extends State<ChooseLocation> {
   List<Map<String, String>> _filteredCityData = [];
   final TextEditingController _controller = TextEditingController();
   Timer? _debounce;
-  
+  bool isFunctionComplete = false;
+
+
 
   @override
   void initState() {
@@ -70,9 +71,10 @@ class _ChooseLocationState extends State<ChooseLocation> {
 
     setState(() {
       _filteredCityData = _cityData;
+      isFunctionComplete = true;
     });
 
-    // print("${_cityData.length}");
+    print("${_cityData.length}");
 
     // testData = List.generate(50, (i) => {'city': 'City $i'});
 
@@ -106,7 +108,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[900],
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 68, 86, 36),
         title: Text(
@@ -126,6 +128,9 @@ class _ChooseLocationState extends State<ChooseLocation> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
+              style: TextStyle(
+                color: Colors.grey[400]
+              ),
               controller: _controller,
               onChanged: _onChanged,
               decoration: InputDecoration(
@@ -136,17 +141,19 @@ class _ChooseLocationState extends State<ChooseLocation> {
             ),
           ),
           Expanded(
-            child: _filteredCityData.isEmpty? Center(
+            child: isFunctionComplete?
+            _filteredCityData.isEmpty? Center(
               child: Text(
-                  "Couldn't find this city. Maybe try changing the spelling?🤔",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
-                  ),
-                  textAlign: TextAlign.center,
+                "Couldn't find this city. Maybe try changing the spelling?🤔",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  color: Colors.grey[400]
+                ),
+                textAlign: TextAlign.center,
               ),
             )
-            : ListView.separated(
+                : ListView.separated(
               itemCount: _filteredCityData.length,
               itemBuilder: (_, index) {
                 return ListTile(
@@ -155,7 +162,8 @@ class _ChooseLocationState extends State<ChooseLocation> {
                     style: TextStyle(
                       fontFamily: 'MuseoModerno',
                       fontSize: 25,
-                      fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[400]
                     ),
                   ),
                   hoverColor: Colors.grey,
@@ -171,11 +179,14 @@ class _ChooseLocationState extends State<ChooseLocation> {
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
                   child: Divider(
-                    color: Colors.black45
+                      color: Colors.grey[800]
                   ),
                 );
               },
-            ),
+            )
+            : Center(
+              child: CircularProgressIndicator(),
+            )
           )
         ],
       ),
