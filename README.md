@@ -41,15 +41,15 @@ dependencies:
 ```
 ---
 
-##🚀 Getting Started
+## 🚀 Getting Started
 
-  ###Prerequisites
+  ### Prerequisites
   
   - Flutter SDK Installed
   - Android Studio or VS Code with flutter plugin
   - Working internet connection
 
-  ###Installation
+  ### Installation
   ```bash
   git clone https://github.com/HalianCage/WorldTime.git
   cd WorldTime
@@ -59,7 +59,7 @@ dependencies:
 
 ---
   
-##📂 Project Structure
+## 📂 Project Structure
 ```
 lib/
 ├── main.dart                  # Entry point
@@ -76,17 +76,23 @@ lib/
 
 ---
 
-##🧪 Screenshots
+## 🧪 Screenshots
 
-###Home Screen
+### Home Screen
 
-###Loading Screen
+![Home Screen](/assets/readmeImages/home_screen.png)
 
-###Search Page
+### Loading Screen
+
+![Loading Screen](/assets/readmeImages/loading_screen.png)
+
+### Search Page
+
+![Search Page](/assets/readmeImages/search_page.png)
 
 ---
 
-##🧠 How It Works
+## 🧠 How It Works
 - Start App → Goes to loading.dart
 - Check arguments from previous page (e.g., city)
 - If not provided → Uses location_services.dart to detect user location
@@ -96,7 +102,7 @@ lib/
 
 ---
 
-##❗ Troubleshooting
+## ❗Troubleshooting
 - If geolocation doesn't work, check:
   - Location permission granted
   - Location services enabled
@@ -108,7 +114,7 @@ lib/
  
 ---
 
-##License & Credits
+## License & Credits
 
 This project is an adaptation of the original project by NetNinja(hands down the best) in his flutter course - https://www.youtube.com/playlist?list=PL4cUxeGkcC9jLYyp2Aoh6hcWuxFDX6PBJ
 There are lots of different adaptations and features that I have added so hope you check it once.
@@ -116,7 +122,8 @@ This project is open-source and available under the MIT License.
 
 ---
 
-##✨ Author
+## ✨ Author
+
 Made with ❤️ by HalianCage
 
 ---
