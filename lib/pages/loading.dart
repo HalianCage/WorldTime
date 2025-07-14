@@ -1,8 +1,9 @@
+//ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:world_time/services/world_time.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:world_time/services/location_services.dart';
-import 'package:geocoding/geocoding.dart';
 
 class Loading extends StatefulWidget {
   const Loading({super.key});
@@ -19,72 +20,105 @@ class LoadingState extends State<Loading> {
   late String country;
   late String time;
   late String date;
-
-  // LoadingState({required this.city});
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    initSetup();
-  }
-
-  void initSetup() async {
-    bool check = await checkPermission();
-    print("Permission status: $check");
-
-    await getLocation();
-    await getCity();
-  }
-
+  late bool permissionCheck;
+  late bool serviceEnabledCheck;
+  late List? placeMark;
+  bool usedDeviceLocation = false;
 
   @override
   void didChangeDependencies() {
-
     super.didChangeDependencies();
     if (!_isInitialized) {
-      // Object? temp = ModalRoute.of(context)!.settings.arguments;
-      // city = temp.toString() ?? "Kolkata";
-      final args = ModalRoute.of(context)!.settings.arguments;
 
-      if(args != null && args is Map) {
-
-        city = args['city'];
-        country = args['country'];
-
-      }
-      else {
-        city = 'San Francisco';
-        country = 'United States of America';
-      }
       _isInitialized = true;
-      setupWorldTime();
-    }
+      _initSetup();
 
+    }
   }
 
+  ///function to get the correct city and country
+  ///Has 3 possible options -
+  ///1)City and country is passed on from the search_page.dart, which is a user selection. Highest Priority.
+  ///2)Using device location, city and country are fetched using custom functions. Second priority.
+  ///3)Default values. Act as fallback values. Least priority.
+  Future<void> _initSetup() async {
 
-  Future<void> getCity() async {
-    try {
-      List<Placemark> placeMarks = await placemarkFromCoordinates(40.7128, -74.0060);
+    ///accessing data sent(if any) sent from the search_page.dart
+    final args = ModalRoute.of(context)?.settings.arguments;
 
-      if (placeMarks.isNotEmpty) {
-        Placemark place = placeMarks.first;
-        print("City: ${place.locality}");
-        print("Country: ${place.country}");
-      } else {
-        print("No placemarks returned.");
+    ///If block to use the search_page.dart selection
+    if(args != null && args is Map && args['city'] != null && args['country'] != null) {
+
+      city = args['city'];
+      country = args['country'];
+
+    }
+    else {
+
+      try {
+
+        ///Checking and asking for location access permission and also for location service.
+        permissionCheck = await checkPermission();
+        serviceEnabledCheck = await checkServiceEnabled();
+
+        ///If block to use the device location if both the permission is granted and the location service is enabled.
+        if(permissionCheck && serviceEnabledCheck) {
+
+          print("Both permissions granted");
+          ///get device location
+          placeMark = await getLocation();
+          // print(placeMark);
+
+          if(placeMark != null) {
+
+            city = placeMark![0].locality;
+            country = placeMark![0].country == "United States" ? "United States of America" : placeMark![0].country;
+            usedDeviceLocation = true;
+            print("Device location has been successfully accessed and used");
+
+          }
+          else {
+
+            print("Placemark is null");
+            _defaultLocation();
+          }
+
+        }
+        else {
+
+          print("A permission has not been granted");
+          _defaultLocation();
+        }
+
       }
+      catch(e, stackTrace) {
 
-    } catch (e, stackTrace) {
-      print("Error while getting placemark: $e");
-      print("Stack trace: $stackTrace");
+        print("Some error Occurred: $e");
+        print("Stack Trace: $stackTrace");
+        _defaultLocation();
+
+      }
     }
+
+    await setupWorldTime();
+
   }
 
+  void _defaultLocation() {
+
+    setState(() {
+      city = "San Francisco";
+      country = "United States of America";
+    });
+
+  }
+
+  // void debugIsolate() {
+  //   print('Running on isolate: ${Isolate.current.debugName}');
+  // }
 
 
-  void setupWorldTime() async {
+  Future<void> setupWorldTime({bool isFallBackAttempt = false}) async {
     WorldTime instance = WorldTime(city: city, country: country);
     await instance.getTime();
     await Future.delayed(Duration(seconds: 2));
@@ -103,7 +137,14 @@ class LoadingState extends State<Loading> {
     else if(instance.statusCheck == 401) {
 
       String errorMessage = "Couldn't contact our guy there. Try checking your internet connection maybe🤔?";
-      Navigator.pushReplacementNamed(context, '/error_message', arguments: errorMessage);
+      Navigator.pushReplacementNamed(context, '/error_page', arguments: errorMessage);
+
+    }
+    else if(instance.statusCheck == 402 && usedDeviceLocation && !isFallBackAttempt) {
+
+      print("Unsupported location. Falling back to default");
+      _defaultLocation();
+      await setupWorldTime(isFallBackAttempt: true);
 
     }
     else {
@@ -120,6 +161,9 @@ class LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 83, 105, 45),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
